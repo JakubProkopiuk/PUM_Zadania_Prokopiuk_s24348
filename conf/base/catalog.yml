@@ -1,0 +1,7 @@
+titanic_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/titanic.csv
+
+iris_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/iris.csv
