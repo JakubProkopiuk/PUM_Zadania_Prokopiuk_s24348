@@ -16,6 +16,12 @@ dependencies = [
     "jupyterlab>=3.0",
     "notebook",
     "kedro~=1.7.0",
+    "ipykernel>=6.29",
+    "scikit-learn>=1.4",
+    "seaborn>=0.13",
+    "matplotlib>=3.8",
+    "pandas>=2,<4",
+    "kedro-datasets[pandas-csvdataset]>=9,<10",
 ]
 
 [project.scripts]

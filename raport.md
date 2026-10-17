@@ -1,116 +1,157 @@
-# Raport EDA - Zadanie 1 PUM
+# Raport EDA — Zadanie 1
 
-## 1. Cel analizy
+## 1. Cel
 
-Celem zadania jest przeprowadzenie eksploracyjnej analizy
-dwoch zbiorow danych w projekcie Kedro: Titanic i Iris.
-Analiza obejmuje strukture danych, statystyki opisowe,
-braki danych, duplikaty oraz podstawowe wizualizacje.
+Eksploracyjna analiza dwóch zbiorów danych:
+Titanic i Iris, załadowanych przez Kedro Data Catalog.
 
-## 2. Zbior Titanic
+## 2. Titanic
 
-Zrodlo: seaborn-data (GitHub).
+**Źródło:** seaborn-data.
 
-### Charakterystyka
-- Liczba rekordow: 891
-- Liczba kolumn: 15
-- Zmienna celu: survived (0 - nie przezyl, 1 - przezyl)
+**Rozmiar:** 891 rekordów, 15 kolumn.
 
-### Najwazniejsze zmienne
-- sex - plec pasazera
-- pclass - klasa biletu
-- age - wiek pasazera
+### Najważniejsze zmienne
 
-Zmienne te moga byc przydatne do analizy czynnikow
-zwiazanych z prawdopodobienstwem przezycia.
+- `survived` — informacja o przeżyciu (0 lub 1).
+- `sex` — płeć pasażera.
+- `pclass` — klasa podróży.
 
-### Jakosc danych
-- age: 177 brakujacych wartosci (19,87%)
-- deck: 688 brakujacych wartosci (77,22%)
-- embarked: 2 brakujace wartosci
-- embark_town: 2 brakujace wartosci
-- 107 powtarzajacych sie wierszy
+Dodatkowo przeanalizowano wiek (`age`).
 
-Powtarzajace sie wiersze nie musza oznaczac bledow,
-poniewaz dane nie zawieraja unikalnego identyfikatora
-pasazera. Nie nalezy usuwac ich automatycznie.
+### Jakość danych
 
-### Wnioski
-Odsetek ocalalych wynosi okolo 38,4%.
-Kobiety przezywaly znacznie czesciej niz mezczyzni.
-Najwiecej pasazerow podrozowalo trzecia klasa.
-Przed przyszlym modelowaniem nalezy rozwazyc
-uzupelnienie brakow wieku i obsluge kolumny deck.
+- `age`: 177 braków (19,87%).
+- `deck`: 688 braków (77,22%).
+- `embarked`: 2 braki.
+- `embark_town`: 2 braki.
+- 107 powtarzających się wierszy.
 
-## 3. Zbior Iris
+Powtarzające się wiersze nie muszą oznaczać błędów,
+ponieważ różni pasażerowie mogą posiadać
+identyczne opisane cechy.
 
-Zrodlo: scikit-learn, load_iris.
+### Wyniki
 
-### Charakterystyka
-- Liczba rekordow: 150
-- Liczba kolumn: 5
-- Trzy gatunki kwiatow, po 50 obserwacji
-- Zmienna celu: target (0, 1 lub 2)
+Łączna przeżywalność: 38,38%.
 
-### Najwazniejsze zmienne
-- petal length (cm) - dlugosc platka
-- petal width (cm) - szerokosc platka
-- target - gatunek kwiatu
+| Płeć | Przeżywalność |
+|---|---:|
+| Kobiety | 74,20% |
+| Mężczyźni | 18,89% |
 
-### Jakosc danych
-- Brak brakujacych wartosci
-- 1 powtarzajacy sie wiersz
-- Wszystkie cechy pomiarowe sa numeryczne
+| Klasa podróży | Przeżywalność |
+|---|---:|
+| Pierwsza | 62,96% |
+| Druga | 47,28% |
+| Trzecia | 24,24% |
 
-### Wnioski
-Srednia dlugosc platka wynosi okolo 3,76 cm.
-Wymiary platkow roznia sie miedzy gatunkami.
-Setosa jest wyraznie oddzielona od pozostalych
-gatunkow na wykresie zaleznosci wymiarow platkow.
-Versicolor i Virginica czesciowo sie nakladaja.
+Zaobserwowano wyższą przeżywalność wśród kobiet
+oraz pasażerów pierwszej klasy. Są to zależności
+obserwacyjne, a nie dowód związku przyczynowego.
 
-## 4. Porownanie zbiorow
+Wiek ma rozkład skupiony głównie wokół
+młodych i średnich grup wiekowych.
 
-Titanic jest wiekszym i bardziej zroznicowanym
-zbiorem. Zawiera dane liczbowe, kategoryczne
-oraz liczne braki wartosci.
+## 3. Iris
 
-Iris jest mniejszy, kompletny i zawiera glownie
-numeryczne pomiary. Klasy sa rownomiernie rozlozone.
+**Źródło:** scikit-learn, load_iris.
 
-Titanic nadaje sie do analizy przezywalnosci,
-natomiast Iris do klasyfikacji gatunkow kwiatow.
+**Rozmiar:** 150 rekordów, 5 kolumn.
 
-## 5. Mozliwe wykorzystanie w Kedro
+### Najważniejsze zmienne
 
-Oba datasety nie posiadaja wspolnego klucza
-ani logicznej relacji umozliwiajacej polaczenie
-ich rekordow w jedna tabele.
+- `petal length (cm)` — długość płatka.
+- `petal width (cm)` — szerokość płatka.
+- `target` — gatunek kwiatu (0, 1 lub 2).
 
-W przyszlosci mozna utworzyc dwie osobne galezie
-pipeline Kedro, korzystajace ze wspolnych zasad
-przygotowania danych.
+### Jakość danych
 
-Dla Titanica potrzebna bedzie obsluga brakow
-danych i kodowanie zmiennych kategorycznych.
-Dla Iris wystarczy prostsze przygotowanie
-cech numerycznych.
+- Brak brakujących wartości.
+- Jeden powtarzający się wiersz.
+- Po 50 obserwacji każdego gatunku.
 
-Wyniki obu galezi mozna zestawic na poziomie
-raportowania lub porownania modeli.
+### Wyniki
+
+| Gatunek | Średnia długość płatka |
+|---|---:|
+| Setosa | 1,46 cm |
+| Versicolor | 4,26 cm |
+| Virginica | 5,55 cm |
+
+Korelacja długości i szerokości płatków
+wynosi 0,963, co oznacza bardzo silną dodatnią
+zależność liniową w całym zbiorze.
+
+Na wykresie punktowym Setosa jest wyraźnie
+oddzielona od pozostałych gatunków,
+natomiast Versicolor i Virginica częściowo
+nakładają się na siebie.
+
+## 4. Porównanie zbiorów
+
+| Cecha | Titanic | Iris |
+|---|---|---|
+| Rekordy | 891 | 150 |
+| Kolumny | 15 | 5 |
+| Dane | Liczbowe i kategoryczne | Numeryczne i cel |
+| Braki | Występują | Brak |
+| Cel | Przeżycie | Gatunek kwiatu |
+
+Titanic wymaga większej uwagi w zakresie
+jakości danych. Iris jest zbiorem kompletnym
+i ma równomierny rozkład klas.
+
+## 5. Możliwe wspólne wykorzystanie w Kedro
+
+Zbiory nie posiadają wspólnego klucza
+umożliwiającego bezpośrednie połączenie rekordów.
+
+Można wykorzystać dwa niezależne przepływy
+danych w jednym projekcie Kedro, stosujące
+wspólne zasady kontroli jakości i raportowania.
+
+Titanic wymagałby obsługi braków i zmiennych
+kategorycznych, a Iris prostszego przetwarzania
+cech liczbowych.
+
+Jest to wyłącznie koncepcja, bez implementacji.
 
 ## 6. Wykresy
 
-### Titanic
-![Rozklad wieku](data/08_reporting/01_titanic_wiek.png)
+### Titanic — rozkład wieku
 
-![Przezycie](data/08_reporting/02_titanic_przezycie.png)
+![Titanic — rozkład wieku](data/08_reporting/01_titanic_wiek.png)
 
-![Plec](data/08_reporting/03_titanic_plec.png)
+### Titanic — przeżycie
 
-### Iris
-![Dlugosc platkow](data/08_reporting/04_iris_platki.png)
+![Titanic — przeżycie](data/08_reporting/02_titanic_przezycie.png)
 
-![Gatunki](data/08_reporting/05_iris_gatunki.png)
+### Titanic — płeć
 
-![Zaleznosc cech](data/08_reporting/06_iris_zaleznosc.png)
+![Titanic — płeć](data/08_reporting/03_titanic_plec.png)
+
+### Titanic — klasa
+
+![Titanic — klasa](data/08_reporting/07_titanic_klasa.png)
+
+### Titanic — braki danych
+
+![Titanic — braki danych](data/08_reporting/08_titanic_braki.png)
+
+### Iris — długość płatków
+
+![Iris — długość płatków](data/08_reporting/04_iris_platki.png)
+
+### Iris — gatunki
+
+![Iris — gatunki](data/08_reporting/05_iris_gatunki.png)
+
+### Iris — zależność cech
+
+![Iris — zależność cech](data/08_reporting/06_iris_zaleznosc.png)
+
+### Iris — korelacje
+
+![Iris — korelacje](data/08_reporting/09_iris_korelacje.png)
+

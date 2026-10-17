@@ -1,66 +1,68 @@
-# PUM - Zadania 1 i 2
+# PUM — Zadanie 1: Eksploracja danych w Kedro
 
-Projekt przygotowany na przedmiot PUM na PJATK.
+Projekt na przedmiot PUM (PJATK).
 
-Repozytorium jest przeznaczone na Zadanie 1 i Zadanie 2.
-Zadanie 1 obejmuje eksploracyjna analize danych (EDA).
-Zadanie 2 bedzie kontynuacja projektu o etap modelowania.
+Celem Zadania 1 jest wczytanie dwóch zbiorów danych
+do Kedro, wykonanie analizy EDA, wizualizacji
+oraz przedstawienie wniosków.
 
-## Zadanie 1 - Analiza danych
+Zgodnie z założeniami kursu ten sam projekt może
+być kontynuowany w Zadaniu 2. Obecna wersja
+obejmuje wyłącznie Zadanie 1.
 
-W projekcie wykorzystano dwa zbiory danych:
+## Zbiory danych
 
-### Titanic
-- Zrodlo: seaborn-data (GitHub)
-- 891 rekordow i 15 kolumn
-- Zmienna celu: survived
-- Analiza wieku, przezywalnosci i plci pasazerow
-- Zidentyfikowano braki danych, m.in. w kolumnach age i deck
+| Zbiór | Rekordy | Kolumny | Zmienna celu |
+|---|---:|---:|---|
+| Titanic | 891 | 15 | survived |
+| Iris | 150 | 5 | target |
 
-### Iris
-- Zrodlo: scikit-learn
-- 150 rekordow i 5 kolumn
-- Zmienna celu: target
-- Analiza wymiarow platkow i gatunkow kwiatow
-- Brak brakujacych wartosci
+Źródła:
+- Titanic: https://github.com/mwaskom/seaborn-data
+- Iris: scikit-learn, load_iris
 
-## Wnioski z EDA
+## Wykonane czynności
 
-Titanic zawiera dane numeryczne i kategoryczne,
-a takze liczne braki danych.
-Plec pasazera wykazuje wyrazny zwiazek z przezyciem.
+- Utworzenie projektu Kedro
+- Rejestracja CSV w Kedro Data Catalog
+- Analiza struktury, typów i braków danych
+- Obliczenie statystyk opisowych
+- Analiza rozkładów i zależności
+- Przygotowanie 9 wykresów
+- Opracowanie raportu EDA
 
-Iris zawiera kompletne dane numeryczne.
-Wymiary platkow pomagaja rozrozniac gatunki kwiatow.
+## Najważniejsze wnioski
+
+**Titanic:** Przeżywalność wynosi 38,38%.
+Kobiety oraz pasażerowie pierwszej klasy
+przeżywali częściej. W zbiorze występują
+liczne braki danych w kolumnach age i deck.
+
+**Iris:** Zbiór nie ma brakujących wartości.
+Długość i szerokość płatków są silnie
+skorelowane (r = 0,963).
 
 ## Struktura projektu
 
-- `conf/base/catalog.yml` - konfiguracja Kedro Data Catalog
-- `data/01_raw/` - surowe pliki CSV
-- `data/08_reporting/` - szesc wykresow PNG
-- `notebooks/eda.ipynb` - kod analizy danych
-- `raport.md` - szczegolowy raport i wnioski
-- `src/` - struktura projektu Kedro
+- `conf/base/catalog.yml` — konfiguracja danych
+- `data/01_raw/` — dwa pliki CSV
+- `data/08_reporting/` — 9 wykresów PNG
+- `notebooks/eda.ipynb` — analiza EDA
+- `raport.md` — wyniki i wnioski
+- `pyproject.toml` — konfiguracja projektu
 
 ## Uruchomienie
 
-Projekt wykorzystuje Python 3.12 i Kedro 1.7.
-
-Po utworzeniu i aktywowaniu srodowiska Python:
+Python 3.12:
 
 ```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
 python -m pip install -e .
-python -m pip install "kedro-datasets[pandas-csvdataset]"
-python -m pip install matplotlib seaborn scikit-learn ipykernel
 kedro jupyter lab
 ```
 
-Nastepnie otworz `notebooks/eda.ipynb`
-i uruchom wszystkie komorki.
+Otwórz `notebooks/eda.ipynb`, wybierz kernel
+Kedro i uruchom komórki od początku do końca.
 
-## Kolejny etap
-
-W Zadaniu 2 projekt zostanie rozszerzony o pipeline
-przygotowania danych oraz modelowanie.
-Dwa niezalezne zbiory beda obslugiwane
-przez osobne galezie pipeline Kedro.
+Wykresy zapisywane są w `data/08_reporting/`.
